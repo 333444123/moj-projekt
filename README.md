@@ -1,0 +1,1 @@
+jest to moj pierwszy projekt, jestem bardzo z siebie dumny
