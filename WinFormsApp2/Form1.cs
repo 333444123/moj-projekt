@@ -1,0 +1,96 @@
+namespace WinFormsApp2
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(textBox1.Text) || string.IsNullOrEmpty(textBox2.Text) || string.IsNullOrEmpty(textBox3.Text) || string.IsNullOrEmpty(textBox6.Text))
+            {
+                label9.Text = "Wypełnij wszystkie okna";
+            } else if (textBox3.TextLength != 11) {
+                label9.Text = "Pesel powinien posiadać 11 cyfr";
+            }  else {
+
+                bool CzyDataZPeselu(string pesel, DateTime data)
+                {
+                    int rok = int.Parse(pesel.Substring(0, 2));
+                    int miesiac = int.Parse(pesel.Substring(2, 2));
+                    int dzien = int.Parse(pesel.Substring(4, 2));
+
+                    int pelnyRok;
+
+                    if (miesiac >= 1 && miesiac <= 12)
+                    {
+                        pelnyRok = 1900 + rok;
+                    }
+                    else
+                    {
+                        pelnyRok = 2000 + rok;
+                        miesiac -= 20;
+                    }
+
+                    try
+                    {
+                        DateTime dataZPeselu = new DateTime(pelnyRok, miesiac, dzien);
+                        return dataZPeselu.Date == data.Date;
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                }
+
+                if (CzyDataZPeselu(textBox3.Text, dateTimePicker1.Value))
+                {
+                    int M;
+                    int R;
+
+                    int[] wagi = { 1, 3, 7, 9, 1, 3, 7, 9, 1, 3 };
+                    int Suma = 0;
+
+                    for (int i = 0; i < 10; i++)
+                    {
+                        Suma += (textBox3.Text[i] - '0') * wagi[i];
+                    }
+                    M = Suma % 10;
+                    R = (10 - M) % 10;
+                    if (R == textBox3.Text[10] - '0')
+                    {
+                        label9.Text = $"Imie: {textBox1.Text}\n" +
+                        $"Nazwisko: {textBox2.Text}\n" +
+                        $"Pesel: {textBox3.Text}\n" +
+                        $"Płeć: {(textBox3.Text[9] % 2 == 0 ? "Kobieta" : "Mężczyzna")}\n" +
+                        $"Data urodzenia: {dateTimePicker1.Value.ToString("dd/MM/yyyy")}\n" +
+                        $"Miasto: {textBox6.Text}";
+                    }
+                    else
+                    {
+                        label9.Text = "Pesel nie poprawny";
+
+                    }
+                }
+                else
+                {
+                    label9.Text = "Data urodzenia nie zgadza się z datą w peselu";
+                }
+                
+                
+                    
+                
+                
+            }
+            
+        }
+    }
+}

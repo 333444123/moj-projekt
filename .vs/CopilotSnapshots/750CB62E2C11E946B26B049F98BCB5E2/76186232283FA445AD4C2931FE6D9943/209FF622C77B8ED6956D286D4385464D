@@ -1,0 +1,36 @@
+﻿namespace WinFormsApp2
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (textBox3.TextLength != 11)
+            {
+                label9.Text = "Pesel za krotki";
+            } else if (textBox1.Text.Equals.Null) {
+                
+            
+            
+            } else {
+                label9.Text = $"Imie: {textBox1.Text}\n" +
+                $"Nazwisko: {textBox2.Text}\n" +
+                $"Pesel: {textBox3.Text}\n" +
+                $"Płeć: {(textBox3.Text[9] % 2 == 0 ? "Kobieta" : "Mężczyzna")}\n" +
+                $"Data urodzenia: {dateTimePicker1.Value.ToShortDateString()}\n" +
+                $"Miasto: {textBox6.Text}";
+            }
+            
+        }
+    }
+}
